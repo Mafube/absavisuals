@@ -20,6 +20,23 @@ ggplot(revenue_long, aes(x = transaction_description, y = value, fill = transact
 
 #-----------------------Revenue Charges---------------------
 charges <- read.csv('/Users/tshmacm1172/Desktop/ABSA_PROJECT/charges.csv', sep = ',')
+summary(charges)
+
+
+install.packages("writexl")
+library(writexl)
+
+# Generate summary of the 'assets' dataset
+summary_charges <- summary(charges)
+
+# Convert summary to a data frame (if it's not already in a usable format)
+summary_df <- as.data.frame(summary_charges)
+
+# Write the summary to an Excel file
+write_xlsx(summary_df, path = "/Users/tshmacm1172/Desktop/ABSA_PROJECT/charges.xlsx")
+
+
+
 charges$amt <- ifelse(charges$amt < 0, abs(charges$amt), charges$amt)
 
 filtered_data$record_date <- as.Date(filtered_data$record_date)
@@ -64,7 +81,13 @@ plot(monthly_sum$year_month, monthly_sum$monthly_total, type = "b", xlab = "Year
 
 
 
-
+ggplot(charges, aes(x = monthly_sum$year_month, y = amt, fill = amt > 0)) +
+  geom_bar(stat = "identity", width = 0.5) +
+  scale_fill_manual(values = c("red", "green")) +  # Colors for negative and positive
+  labs(title = "Bar Plot with Negative and Positive Values",
+       x = "Category", y = "Value") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 
