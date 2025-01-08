@@ -36,7 +36,8 @@ monthly_sum <- filtered_data %>%
   summarise(monthly_total = sum(amt, na.rm = TRUE))
 
 # View the result
-pie(monthly_sum$monthly_total,monthly_sum$year_month )
+pie(monthly_sum$monthly_total,monthly_sum$year_month, main="Total charges 
+    Received by ABSA per Month for Financial Period of 2021/2022" )
 
 #plot
 plot( monthly_sum$monthly_total)
